@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Income Tax Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #4a4a4a;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #5b2be0;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #8e57ff;
+    }
+    .output {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Income Tax Calculator</h1>
+
+    <!-- Income Input Form -->
+    <div class="form-group">
+      <label for="income">Enter Taxable Income (₱):</label>
+      <input type="number" id="income" placeholder="Enter Taxable Income">
+    </div>
+
+    <button onclick="computeIncomeTax()">Calculate Tax</button>
+
+    <!-- Result Section -->
+    <div class="output" id="result"></div>
+  </div>
+
+  <script>
+    function computeIncomeTax() {
+      // Get the input taxable income
+      const taxableIncome = parseFloat(document.getElementById('income').value);
+      let tax = 0;
+
+      // Check which tax bracket the taxable income falls into and compute tax
+      if (taxableIncome <= 250000) {
+        tax = 0;
+      } else if (taxableIncome <= 400000) {
+        tax = (taxableIncome - 250000) * 0.2;
+      } else if (taxableIncome <= 800000) {
+        tax = 30000 + (taxableIncome - 400000) * 0.25;
+      } else if (taxableIncome <= 2000000) {
+        tax = 130000 + (taxableIncome - 800000) * 0.3;
+      } else if (taxableIncome <= 8000000) {
+        tax = 490000 + (taxableIncome - 2000000) * 0.32;
+      } else {
+        tax = 2410000 + (taxableIncome - 8000000) * 0.35;
+      }
+
+      // Display the result
+      document.getElementById('result').innerHTML = `
+        <strong>Taxable Income:</strong> ₱${taxableIncome.toFixed(2)}<br>
+        <strong>Income Tax:</strong> ₱${tax.toFixed(2)}
+      `;
+    }
+  </script>
+
+</body>
+</html>

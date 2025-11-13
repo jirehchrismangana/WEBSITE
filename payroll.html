@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Payroll Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #4a4a4a;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #5b2be0;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #8e57ff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+    }
+    table th, table td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+    table th {
+      background-color: #f2f2f2;
+    }
+    .delete-button {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .delete-button:hover {
+      background-color: #c0392b;
+    }
+    .back-btn {
+      margin-top: 20px;
+      display: inline-block;
+      background-color: transparent;
+      color: #5b2be0;
+      border: 1px solid #5b2be0;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .back-btn:hover {
+      background-color: #e8e8e8;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Payroll Management</h1>
+
+    <!-- Employee Addition Form -->
+    <div class="form-group">
+      <label for="name">Employee Name:</label>
+      <input type="text" id="name" placeholder="e.g. John Doe">
+    </div>
+
+    <div class="form-group">
+      <label for="daysWorked">Days Worked:</label>
+      <input type="number" id="daysWorked" placeholder="e.g. 20">
+    </div>
+
+    <div class="form-group">
+      <label for="dailyRate">Daily Rate (₱):</label>
+      <input type="number" id="dailyRate" placeholder="e.g. 500">
+    </div>
+
+    <div class="form-group">
+      <label for="deductionAmount">Deduction Amount (₱):</label>
+      <input type="number" id="deductionAmount" placeholder="e.g. 1000">
+    </div>
+
+    <button onclick="addEmployee()">Add Employee</button>
+
+    <!-- Delete Employee Section -->
+    <h2>Delete Employee</h2>
+    <div class="form-group">
+      <label for="deleteLine">Enter Line Number to Delete:</label>
+      <input type="number" id="deleteLine" placeholder="e.g. 1">
+    </div>
+    <button onclick="deleteEmployee()">Delete Employee</button>
+
+    <!-- Payroll List Table -->
+    <h2>Payroll List</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Employee Name</th>
+          <th>Days Worked</th>
+          <th>Daily Rate (₱)</th>
+          <th>Gross Pay (₱)</th>
+          <th>Deduction Amount (₱)</th>
+          <th>Net Pay (₱)</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="payrollList"></tbody>
+    </table>
+  </div>
+
+  <script>
+    let employeeList = [];
+
+    function addEmployee() {
+      const name = document.getElementById('name').value;
+      const daysWorked = parseFloat(document.getElementById('daysWorked').value);
+      const dailyRate = parseFloat(document.getElementById('dailyRate').value);
+      const deductionAmount = parseFloat(document.getElementById('deductionAmount').value);
+
+      // Calculate Gross Pay and Net Pay
+      const grossPay = daysWorked * dailyRate;
+      const netPay = grossPay - deductionAmount;
+
+      // Create a new employee object
+      const newEmployee = {
+        name,
+        daysWorked,
+        dailyRate,
+        grossPay,
+        deductionAmount,
+        netPay
+      };
+
+      // Add employee to the list
+      employeeList.push(newEmployee);
+
+      // Clear input fields
+      document.getElementById('name').value = '';
+      document.getElementById('daysWorked').value = '';
+      document.getElementById('dailyRate').value = '';
+      document.getElementById('deductionAmount').value = '';
+
+      // Update the payroll table
+      updatePayrollTable();
+    }
+
+    function deleteEmployee() {
+      const lineNumber = parseInt(document.getElementById('deleteLine').value) - 1;
+      
+      // Check if the line number is valid
+      if (lineNumber >= 0 && lineNumber < employeeList.length) {
+        // Remove employee from the list
+        employeeList.splice(lineNumber, 1);
+
+        // Update the payroll table
+        updatePayrollTable();
+      } else {
+        alert("Invalid line number");
+      }
+
+      // Clear input field
+      document.getElementById('deleteLine').value = '';
+    }
+
+    function updatePayrollTable() {
+      const payrollList = document.getElementById('payrollList');
+      payrollList.innerHTML = '';  // Clear existing table rows
+
+      // Loop through employee list and display each employee
+      employeeList.forEach((employee, index) => {
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${employee.name}</td>
+          <td>${employee.daysWorked}</td>
+          <td>${employee.dailyRate.toFixed(2)}</td>
+          <td>${employee.grossPay.toFixed(2)}</td>
+          <td>${employee.deductionAmount.toFixed(2)}</td>
+          <td>${employee.netPay.toFixed(2)}</td>
+          <td><button class="delete-button" onclick="deleteEmployeeFromList(${index})">Delete</button></td>
+        `;
+
+        payrollList.appendChild(row);
+      });
+    }
+
+    function deleteEmployeeFromList(index) {
+      // Remove employee from the list
+      employeeList.splice(index, 1);
+
+      // Update the payroll table
+      updatePayrollTable();
+    }
+  </script>
+</body>
+</html>

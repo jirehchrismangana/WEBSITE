@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ComputeHub - by Jireh Chris Mangana</title>
+  <style>
+    :root {
+      --bg: #241e34;
+      --panel: #322a4a;
+      --card: #3f335a;
+      --accent1: #8e57ff;
+      --accent2: #5b2be0;
+      --muted: #cfc7ee;
+      --glass: rgba(255,255,255,0.04);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, #201a30 0%, #251d36 100%);
+      color: var(--muted);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      padding-bottom: 60px;
+    }
+    header {
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.18));
+      padding: 28px 12px;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+    }
+    header h1 { margin: 0; font-size: 36px; color: #d9cfff; letter-spacing: 0.5px; }
+    header p { margin: 6px 0 0; color: #c6b6ff; font-size: 14px; }
+    .section-title {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 22px;
+      color: #e6daff;
+      font-weight: 600;
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 28px auto;
+      padding: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 20px;
+    }
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+      border-radius: 14px;
+      padding: 30px 24px;
+      box-shadow: 0 8px 24px rgba(13,9,29,0.45);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    .card h3 { margin: 0 0 8px; color: #efe8ff; }
+    .card p { margin: 0 0 18px; color: #cfc6ee; }
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
+      color: #12002b;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 26px rgba(91,43,224,0.12);
+    }
+    .btn:hover { transform: translateY(-3px); }
+    .tool-panel {
+      display: none;
+      margin-top: 24px;
+      padding: 22px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.05));
+      border: 1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 12px 36px rgba(6,3,20,0.45);
+    }
+    .row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    label { display: block; color: #e8dcff; margin: 10px 0 6px; font-weight: 600; }
+    input[type="number"], input[type="text"] {
+      padding: 10px 12px; border-radius: 10px; border: none; outline: none;
+      background: rgba(255,255,255,0.04); color: var(--muted); width: 220px;
+    }
+    .output {
+      margin-top: 12px; color: #f4eaff; font-weight: 700; white-space: pre-wrap;
+    }
+    .back {
+      margin-top: 18px; display: inline-block; background: transparent;
+      color: var(--muted); border: 1px solid rgba(255,255,255,0.06);
+      padding: 10px 14px; border-radius: 10px; cursor: pointer;
+    }
+    .back:hover { background: rgba(255,255,255,0.02); }
+    footer { margin-top: 36px; text-align: center; color: #d8cfff; padding: 18px 6px; }
+    @media (max-width: 880px) {
+      .grid { grid-template-columns: 1fr; }
+      .wrap { padding: 18px; }
+      input[type="number"], input[type="text"] { width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>ComputeHub</h1>
+  <p>by Jireh Chris Mangana — INTECH 1B</p>
+</header>
+
+<div class="section-title">Tools</div>
+
+<div class="wrap" id="home">
+  <div class="grid">
+    <div class="card">
+      <h3>Conversion</h3>
+      <p>Celsius ⇆ Fahrenheit, Meters ⇆ Feet</p>
+      <button class="btn" onclick="openTool('tool-conv')">Open</button>
+    </div>
+    <div class="card">
+      <h3>Income Tax Calculator</h3>
+      <p>Compute tax and net income based on input.</p>
+      <button class="btn" onclick="openTool('tool-tax')">Open</button>
+    </div>
+    <div class="card">
+      <h3>Factorial, Sum, and Average</h3>
+      <p>Loop-based calculations</p>
+      <button class="btn" onclick="openTool('tool-loops')">Open</button>
+    </div>
+    <div class="card">
+      <h3>Simple Payroll</h3>
+      <p>Compute salary, deductions, and net pay.</p>
+      <button class="btn" onclick="openTool('tool-pay')">Open</button>
+    </div>
+  </div>
+</div>
+
+<!-- Factorial, Sum, and Average tool -->
+<div class="wrap tool-panel" id="tool-loops" aria-hidden="true">
+  <h2>Factorial (While Loop)</h2>
+  <input id="factorialInput" type="number" placeholder="Enter N (positive integer)" />
+  <button class="btn" onclick="computeFactorial()">Compute Factorial</button>
+  <div id="factorialOutput"></div>
+
+  <h2>Sum of First N Natural Numbers (Do-While Loop)</h2>
+  <input id="sumInput" type="number" placeholder="Enter N (positive integer)" />
+  <button class="btn" onclick="computeSum()">Compute Sum</button>
+  <div id="sumOutput"></div>
+
+  <h2>Average of First N Natural Numbers (For Loop)</h2>
+  <input id="averageInput" type="number" placeholder="Enter N (positive integer)" />
+  <button class="btn" onclick="computeAverage()">Compute Average</button>
+  <div id="averageOutput"></div>
+
+  <button class="back" onclick="goHome()">Back Home</button>
+</div>
+
+<!-- Conversion tool -->
+<div class="wrap tool-panel" id="tool-conv" aria-hidden="true">
+  <h2>Celsius to Fahrenheit</h2>
+  <input id="celsiusInput" type="number" placeholder="Enter Celsius (°C)" />
+  <button class="btn" onclick="convertCelsius()">Convert</button>
+  <div class="output" id="celsiusOutput"></div>
+  
+  <h2>Fahrenheit to Celsius</h2>
+  <input id="fahrenheitInput" type="number" placeholder="Enter Fahrenheit (°F)" />
+  <button class="btn" onclick="convertFahrenheit()">Convert</button>
+  <div class="output" id="fahrenheitOutput"></div>
+
+  <h2>Meters to Feet</h2>
+  <input id="metersInput" type="number" placeholder="Enter Meters (m)" />
+  <button class="btn" onclick="convertMeters()">Convert</button>
+  <div class="output" id="metersOutput"></div>
+
+  <h2>Feet to Meters</h2>
+  <input id="feetInput" type="number" placeholder="Enter Feet (ft)" />
+  <button class="btn" onclick="convertFeet()">Convert</button>
+  <div class="output" id="feetOutput"></div>
+
+  <button class="back" onclick="goHome()">Back Home</button>
+</div>
+
+<!-- Tax tool -->
+<div class="wrap tool-panel" id="tool-tax" aria-hidden="true">
+  <h2>Compute Income Tax</h2>
+  <input id="taxInput" type="number" placeholder="Enter Taxable Income (₱)" />
+  <button class="btn" onclick="computeTax()">Compute Tax</button>
+  <div class="output" id="taxOutput"></div>
+  <button class="back" onclick="goHome()">Back Home</button>
+</div>
+
+<!-- Payroll tool -->
+<div class="wrap tool-panel" id="tool-pay" aria-hidden="true">
+  <h2>Simple Payroll</h2>
+  <input id="nameInput" type="text" placeholder="Employee Name" />
+  <input id="daysInput" type="number" placeholder="Days Worked" />
+  <input id="rateInput" type="number" placeholder="Daily Rate (₱)" />
+  <input id="deductionInput" type="number" placeholder="Deduction Amount (₱)" />
+  <button class="btn" onclick="computePayroll()">Compute Payroll</button>
+  <div class="output" id="payrollOutput"></div>
+
+  <h2>Payroll List</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>Employee Name</th>
+        <th>Days Worked</th>
+        <th>Daily Rate (₱)</th>
+        <th>Gross Pay (₱)</th>
+        <th>Deduction Amount (₱)</th>
+        <th>Net Pay (₱)</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="payrollList"></tbody>
+  </table>
+  <button class="back" onclick="goHome()">Back Home</button>
+</div>
+
+<footer>
+  © 2025 ComputeHub — Designed by Jireh Chris Mangana
+</footer>
+
+<script>
+// Show a tool: hide home and all others
+function openTool(id){
+  document.getElementById('home').style.display = 'none';
+  document.querySelectorAll('.tool-panel').forEach(p => p.style.display = 'none');
+  const el = document.getElementById(id);
+  if(el) el.style.display = 'block';
+  el.setAttribute('aria-hidden','false');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Back home
+function goHome(){
+  document.querySelectorAll('.tool-panel').forEach(p => { p.style.display = 'none'; p.setAttribute('aria-hidden','true'); });
+  document.getElementById('home').style.display = 'block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Factorial, Sum, Average logic
+function computeFactorial() {
+  const n = parseInt(document.getElementById('factorialInput').value, 10);
+  let fact = 1;
+  for (let i = 1; i <= n; i++) {
+    fact *= i;
+  }
+  document.getElementById('factorialOutput').innerText = `Factorial: ${fact}`;
+}
+
+function computeSum() {
+  const n = parseInt(document.getElementById('sumInput').value, 10);
+  let sum = 0, i = 1;
+  do {
+    sum += i;
+    i++;
+  } while (i <= n);
+  document.getElementById('sumOutput').innerText = `Sum: ${sum}`;
+}
+
+function computeAverage() {
+  const n = parseInt(document.getElementById('averageInput').value, 10);
+  let sum = 0;
+  for (let i = 1; i <= n; i++) {
+    sum += i;
+  }
+  const average = sum / n;
+  document.getElementById('averageOutput').innerText = `Average: ${average.toFixed(2)}`;
+}
+
+// Conversion logic
+function convertCelsius(){
+  const celsius = parseFloat(document.getElementById('celsiusInput').value);
+  const result = (celsius * 9 / 5) + 32;
+  document.getElementById('celsiusOutput').innerText = `${celsius}°C = ${result.toFixed(2)}°F`;
+}
+
+function convertFahrenheit(){
+  const fahrenheit = parseFloat(document.getElementById('fahrenheitInput').value);
+  const result = (fahrenheit - 32) * 5 / 9;
+  document.getElementById('fahrenheitOutput').innerText = `${fahrenheit}°F = ${result.toFixed(2)}°C`;
+}
+
+function convertMeters(){
+  const meters = parseFloat(document.getElementById('metersInput').value);
+  const result = meters * 3.28084;
+  document.getElementById('metersOutput').innerText = `${meters} meters = ${result.toFixed(2)} feet`;
+}
+
+function convertFeet(){
+  const feet = parseFloat(document.getElementById('feetInput').value);
+  const result = feet / 3.28084;
+  document.getElementById('feetOutput').innerText = `${feet} feet = ${result.toFixed(2)} meters`;
+}
+
+// Tax calculation logic
+function computeTax() {
+  const taxableIncome = parseFloat(document.getElementById('taxInput').value);
+  let tax = 0;
+
+  if (taxableIncome <= 250000) {
+    tax = 0;
+  } else if (taxableIncome <= 400000) {
+    tax = (taxableIncome - 250000) * 0.20;
+  } else if (taxableIncome <= 800000) {
+    tax = 30000 + (taxableIncome - 400000) * 0.25;
+  } else if (taxableIncome <= 2000000) {
+    tax = 130000 + (taxableIncome - 800000) * 0.30;
+  } else if (taxableIncome <= 8000000) {
+    tax = 490000 + (taxableIncome - 2000000) * 0.32;
+  } else {
+    tax = 2410000 + (taxableIncome - 8000000) * 0.35;
+  }
+
+  document.getElementById('taxOutput').innerText = `Income Tax: ₱${tax.toFixed(2)}`;
+}
+
+// Payroll logic
+let employeeList = [];
+
+function computePayroll(){
+  const name = document.getElementById('nameInput').value;
+  const daysWorked = parseFloat(document.getElementById('daysInput').value);
+  const dailyRate = parseFloat(document.getElementById('rateInput').value);
+  const deduction = parseFloat(document.getElementById('deductionInput').value);
+
+  const grossPay = daysWorked * dailyRate;
+  const netPay = grossPay - deduction;
+
+  const newEmployee = {
+    name,
+    daysWorked,
+    dailyRate,
+    grossPay,
+    deduction,
+    netPay
+  };
+
+  employeeList.push(newEmployee);
+  updatePayrollTable();
+  document.getElementById('payrollOutput').innerText = `Employee: ${name}\nGross Pay: ₱${grossPay.toFixed(2)}\nDeduction: ₱${deduction.toFixed(2)}\nNet Pay: ₱${netPay.toFixed(2)}`;
+}
+
+function updatePayrollTable() {
+  const payrollList = document.getElementById('payrollList');
+  payrollList.innerHTML = '';  // Clear existing table rows
+
+  employeeList.forEach((employee, index) => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${index + 1}</td>
+      <td>${employee.name}</td>
+      <td>${employee.daysWorked}</td>
+      <td>${employee.dailyRate.toFixed(2)}</td>
+      <td>${employee.grossPay.toFixed(2)}</td>
+      <td>${employee.deduction.toFixed(2)}</td>
+      <td>${employee.netPay.toFixed(2)}</td>
+      <td><button onclick="deleteEmployeeFromList(${index})">Delete</button></td>
+    `;
+    payrollList.appendChild(row);
+  });
+}
+
+function deleteEmployeeFromList(index) {
+  employeeList.splice(index, 1);
+  updatePayrollTable();
+}
+</script>
+
+</body>
+</html>

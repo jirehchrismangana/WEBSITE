@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Conversion Tool</title>
+  <style>
+    /* Add your style here */
+  </style>
+</head>
+<body>
+
+  <h2>Celsius to Fahrenheit</h2>
+  <input id="celsiusInput" type="number" placeholder="Enter Celsius (°C)" />
+  <button onclick="convertCelsius()">Convert</button>
+  <div id="celsiusOutput"></div>
+
+  <h2>Fahrenheit to Celsius</h2>
+  <input id="fahrenheitInput" type="number" placeholder="Enter Fahrenheit (°F)" />
+  <button onclick="convertFahrenheit()">Convert</button>
+  <div id="fahrenheitOutput"></div>
+
+  <h2>Meters to Feet</h2>
+  <input id="metersInput" type="number" placeholder="Enter Meters (m)" />
+  <button onclick="convertMeters()">Convert</button>
+  <div id="metersOutput"></div>
+
+  <h2>Feet to Meters</h2>
+  <input id="feetInput" type="number" placeholder="Enter Feet (ft)" />
+  <button onclick="convertFeet()">Convert</button>
+  <div id="feetOutput"></div>
+
+  <script>
+    function convertCelsius() {
+      const celsius = parseFloat(document.getElementById('celsiusInput').value);
+      const result = (celsius * 9 / 5) + 32;
+      document.getElementById('celsiusOutput').innerText = `${celsius}°C = ${result.toFixed(2)}°F`;
+    }
+
+    function convertFahrenheit() {
+      const fahrenheit = parseFloat(document.getElementById('fahrenheitInput').value);
+      const result = (fahrenheit - 32) * 5 / 9;
+      document.getElementById('fahrenheitOutput').innerText = `${fahrenheit}°F = ${result.toFixed(2)}°C`;
+    }
+
+    function convertMeters() {
+      const meters = parseFloat(document.getElementById('metersInput').value);
+      const result = meters * 3.28084;
+      document.getElementById('metersOutput').innerText = `${meters} meters = ${result.toFixed(2)} feet`;
+    }
+
+    function convertFeet() {
+      const feet = parseFloat(document.getElementById('feetInput').value);
+      const result = feet / 3.28084;
+      document.getElementById('feetOutput').innerText = `${feet} feet = ${result.toFixed(2)} meters`;
+    }
+  </script>
+
+</body>
+</html>
